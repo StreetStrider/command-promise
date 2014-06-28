@@ -1,0 +1,34 @@
+{
+	"name": "str-command-promise",
+	"version": "1.0.0",
+	"description": "Promise wrapper for child_process.exec.",
+
+	"license": "MIT",
+
+	"keywords": [ "child_process", "exec", "promise" ],
+
+	"author":
+	{
+		"name":  "StreetStrider",
+		"email": "teamfortresslife@gmail.com"
+	},
+	"homepage":            "https://github.com/StreetStrider/str-command-promise",
+	"repository": { "url": "https://github.com/StreetStrider/str-command-promise.git", "type": "git" },
+	"bugs":       { "url": "https://github.com/StreetStrider/str-command-promise/issues" },
+
+	"main": "src/Command.js",
+	"scripts":
+	{
+		"test": "jasmine-node --matchAll --verbose test/"
+	},
+
+	"dependencies":
+	{
+		"bluebird": "~2",
+		"lodash":   "~2.4"
+	},
+	"devDependencies":
+	{
+		"jasmine-node": "2.0.0-beta3"
+	}
+}
