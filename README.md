@@ -14,7 +14,7 @@ Command(chunk, options)
 Command(chunk, chunk, ...)
 Command(chunk, chunk, ..., options)
 ```
-Where chunk is a *string* or *array of strings*.
+Where chunk is a *string* or *array of strings* or *arguments*.
 Sequence of chunks may be followed by an options object, passed to `child_process.exec`.
 
 ## examples
@@ -22,6 +22,9 @@ Sequence of chunks may be followed by an options object, passed to `child_proces
 Command('ls', '-lA', { cwd: '/tmp' }).then(...);
 Command('ls', [ '-l', '-A' ], { cwd: '/tmp' }).then(...);
 Command([ 'ls', '-1' ], { cwd: '/tmp' }).then(...);
+
+function Echo () { return Command('echo', '-', arguments); }
+Echo('-n', '-a', '-b').then(...);
 ```
 
 ## license
