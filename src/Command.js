@@ -24,6 +24,13 @@ function Command (/* chunk, chunk, ..., options */)
 	}
 	str  = args.join(' ');
 
+	return Command.Simple(str, options);
+}
+
+Command.Simple = Simple;
+
+function Simple (str, options)
+{
 	return new Q(function (r, rj)
 	{
 		exec(str, options, function (error, stdout, stderr)

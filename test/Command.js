@@ -135,6 +135,29 @@ describe('Command', function ()
 
 });
 
+describe('Command.Simple', function ()
+{
+	describe('with strings and arrays', function ()
+	{
+		it('(str)', function (done)
+		{
+			$test(done, Command.Simple('echo -n 1'), '1');
+		});
+		it('(str, options)', function (done)
+		{
+			$test(done, Command.Simple('pwd', { cwd: '/tmp' }), '/tmp\n');
+		});
+	});
+
+	describe('with wrong commands', function ()
+	{
+		it('(fail str)', function (done)
+		{
+			$testError(done, Command('false'), 1);
+		});
+	});
+});
+
 function $test (done, command, stdout, stderr)
 {
 	command

@@ -28,5 +28,13 @@ function Echo () { return Command('echo', '-', arguments); }
 Echo('-n', '-a', '-b', { encoding: 'ascii' }).then(...);
 ```
 
+## simple command
+If you don't need any advanced arguments features, you can use `Command.Simple`.
+It is simpler and faster.
+```javascript
+Command.Simple(str)
+Command.Simple(str, options)
+```
+
 ## license
 MIT. © StreetStrider, 2014.
