@@ -21,10 +21,11 @@ Sequence of chunks may be followed by an options object, passed to `child_proces
 ```javascript
 Command('ls', '-lA', { cwd: '/tmp' }).then(...);
 Command('ls', [ '-l', '-A' ], { cwd: '/tmp' }).then(...);
+Command('ls', [ '-l', '-A', { cwd: '/tmp' } ]).then(...);
 Command([ 'ls', '-1' ], { cwd: '/tmp' }).then(...);
 
 function Echo () { return Command('echo', '-', arguments); }
-Echo('-n', '-a', '-b').then(...);
+Echo('-n', '-a', '-b', { encoding: 'ascii' }).then(...);
 ```
 
 ## license

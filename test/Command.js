@@ -46,9 +46,19 @@ describe('Command', function ()
 			$test(done, Command([ 'echo -n', '$(dirname $(pwd))' ], { cwd: '/tmp' }), '/');
 		});
 
+		it('([ str, str, options ])', function (done)
+		{
+			$test(done, Command([ 'echo -n', '$(dirname $(pwd))', { cwd: '/tmp' } ]), '/');
+		});
+
 		it('(str, [ str, str ], options)', function (done)
 		{
 			$test(done, Command('echo', [ '-n', '$(dirname $(pwd))' ], { cwd: '/tmp' }), '/');
+		});
+
+		it('(str, [ str, str, options ])', function (done)
+		{
+			$test(done, Command('echo', [ '-n', '$(dirname $(pwd))', { cwd: '/tmp' } ]), '/');
 		});
 	});
 
@@ -58,7 +68,6 @@ describe('Command', function ()
 		{
 			var args = Arguments(1, 2, 3);
 			$test(done, Command('echo', args), '1 2 3\n');
-			
 		});
 
 		it('(str, str, arguments)', function (done)
@@ -87,10 +96,22 @@ describe('Command', function ()
 			$test(done, Command('dirname', args, { cwd: '/' }), '/\n');
 		});
 
+		it('(str, arguments with options)', function (done)
+		{
+			var args = Arguments('$(pwd)', { cwd: '/' });
+			$test(done, Command('dirname', args), '/\n');
+		});
+
 		it('(str, [str], arguments, options)', function (done)
 		{
 			var args = Arguments('$(pwd)');
 			$test(done, Command('dirname', '-z', args, { cwd: '/tmp' }), '/\0');
+		});
+
+		it('(str, [str], arguments with options)', function (done)
+		{
+			var args = Arguments('$(pwd)', { cwd: '/tmp' });
+			$test(done, Command('dirname', '-z', args), '/\0');
 		});
 	});
 

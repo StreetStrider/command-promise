@@ -12,17 +12,16 @@ function Command (/* chunk, chunk, ..., options */)
 {
 	var args, options, str;
 
-	options = _.last(arguments);
+	args = _.flatten(arguments);
+	options = _.last(args);
 	if (_.isPlainObject(options))
 	{
-		args    = _.initial(arguments);
+		args    = _.initial(args);
 	}
 	else
 	{
-		args    = arguments;
 		options = undefined;
 	}
-	args = _.flatten(args);
 	str  = args.join(' ');
 
 	return new Q(function (r, rj)
