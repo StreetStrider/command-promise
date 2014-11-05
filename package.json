@@ -1,6 +1,6 @@
 {
-	"name": "str-command-promise",
-	"version": "1.2.0",
+	"name": "command-promise",
+	"version": "1.2.1",
 	"description": "Promise wrapper for child_process.exec.",
 
 	"license": "MIT",
@@ -12,9 +12,9 @@
 		"name":  "StreetStrider",
 		"email": "teamfortresslife@gmail.com"
 	},
-	"homepage":            "https://github.com/StreetStrider/str-command-promise",
-	"repository": { "url": "https://github.com/StreetStrider/str-command-promise.git", "type": "git" },
-	"bugs":       { "url": "https://github.com/StreetStrider/str-command-promise/issues" },
+	"homepage":            "https://github.com/StreetStrider/command-promise",
+	"repository": { "url": "https://github.com/StreetStrider/command-promise.git", "type": "git" },
+	"bugs":       { "url": "https://github.com/StreetStrider/command-promise/issues" },
 
 	"main": "src/Command.js",
 	"scripts":
