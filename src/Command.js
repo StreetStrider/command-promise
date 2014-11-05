@@ -46,3 +46,12 @@ function Simple (str, options)
 		});
 	});
 }
+
+Command.so = function so ()
+{
+	var args = arguments;
+	return function soCommand ()
+	{
+		return Command.apply(null, args);
+	}
+}

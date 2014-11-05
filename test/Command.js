@@ -170,6 +170,29 @@ describe('Command.Simple', function ()
 	});
 });
 
+describe('Command.so', function ()
+{
+	it('creates commands', function (done)
+	{
+		var thenCommand = Command.so('echo', '-n', '1', [ '2', '3' ]);
+
+		eq(typeof thenCommand, 'function');
+
+		$test(done, thenCommand(3, 4, 5), '1 2 3');
+	});
+
+	it('works in chains', function (done)
+	{
+		Command('echo')
+
+		.then(Command.so('echo')) // do mutations in chain
+		.then(Command.so('echo -n 1 2 3'))
+
+		.then($eq('1 2 3'), $fail)
+		.then($done(done), done);
+	});
+});
+
 function $test (done, command, stdout, stderr)
 {
 	command

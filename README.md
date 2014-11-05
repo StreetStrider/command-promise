@@ -36,5 +36,15 @@ Command.Simple(str)
 Command.Simple(str, options)
 ```
 
+## using in the mid of the promise flow
+Use `Command.so` it creates function which will self invoke command.
+It does not append any arguments to command, so it can be used to order operations.
+```javascript
+Command('mkdir -p build')
+.then(Command.so('cp package.json build/'))
+.then(Command.so('cp -r src/'))
+.then(...);
+```
+
 ## license
 MIT. © StreetStrider, 2014.
