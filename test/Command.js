@@ -2,7 +2,9 @@
 
 var
 	Command = require('../src/Command'),
-	Q = require('bluebird');
+	Q = require('bluebird'),
+
+	eq = require('assert').strictEqual;
 
 Q.onPossiblyUnhandledRejection(function () {});
 
@@ -74,6 +76,11 @@ describe('Command', function ()
 		{
 			var args = Arguments('-n', '-a', '-b');
 			$test(done, Command('echo', '1', args), '1 -n -a -b\n');
+		});
+
+		it('(str, str, arguments)', function (done)
+		{
+			var args = Arguments('-n', '-a', '-b');
 			$test(done, Command('echo', '-', args), '- -n -a -b\n');
 		});
 
@@ -81,6 +88,11 @@ describe('Command', function ()
 		{
 			var args = Arguments('-n', '-a', '-b');
 			$test(done, Command('echo', [ '1', args ]),  '1 -n -a -b\n');
+		});
+
+		it('(str, [str, arguments])', function (done)
+		{
+			var args = Arguments('-n', '-a', '-b');
 			$test(done, Command('echo', [ '--', args ]), '-- -n -a -b\n');
 		});
 
@@ -162,7 +174,7 @@ function $test (done, command, stdout, stderr)
 {
 	command
 	.then($eq(stdout, stderr), $fail)
-	.finally(done);
+	.then($done(done), done);
 }
 
 function Arguments ()
@@ -174,16 +186,24 @@ function $testError (done, command, code)
 {
 	command
 	.then($fail, $code(code))
-	.finally(done);
+	.then($done(done), done);
+}
+
+function $done (done)
+{
+	return function ()
+	{
+		done();
+	}
 }
 
 function $eq (stdout, stderr)
 {
 	stderr || (stderr = '');
-	return function eq (pair)
+	return function (pair)
 	{
-		expect(pair[0]).toBe(stdout);
-		expect(pair[1]).toBe(stderr);
+		eq(stdout, pair[0]);
+		eq(stderr, pair[1]);
 	};
 }
 
@@ -191,11 +211,11 @@ function $code (retcode)
 {
 	return function code (error)
 	{
-		expect(error.code).toBe(retcode);
+		eq(retcode, error.code);
 	};
 }
 
 function $fail ()
 {
-	expect(null).not.toBeNull();
+	eq(null, ! null);
 }

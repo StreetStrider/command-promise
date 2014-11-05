@@ -1,6 +1,6 @@
 {
 	"name": "command-promise",
-	"version": "1.2.1",
+	"version": "1.2.2",
 	"description": "Promise wrapper for child_process.exec.",
 
 	"license": "MIT",
@@ -19,7 +19,7 @@
 	"main": "src/Command.js",
 	"scripts":
 	{
-		"test": "jasmine-node --matchAll --verbose test/"
+		"test": "mocha --recursive test/"
 	},
 
 	"dependencies":
@@ -29,6 +29,6 @@
 	},
 	"devDependencies":
 	{
-		"jasmine-node": "2.0.0-beta3"
+		"mocha": "~2"
 	}
 }
