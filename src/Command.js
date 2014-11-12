@@ -9,26 +9,33 @@ var
 
 	_    = require('lodash'),
 
-	last = _.last,
-	initial = _.initial,
+	flat = _.flatten;
 
-	flat = _.flatten,
-	isPlain = _.isPlainObject
+	reduce = _.reduce,
+	isPlain = _.isPlainObject,
+	extend = _.extend;
 
-function Command (/* chunk, chunk, ..., options */)
+
+function Command (/* chunk, chunk, ..., options, options, ... */)
 {
 	var
 		args = flat(arguments),
-		opts = last(args);
+		opts = {};
 
-	if (isPlain(opts))
+	args = reduce(args, function (args, value)
 	{
-		args = initial(args);
+		if (isPlain(value))
+		{
+			extend(opts, value);
+		}
+		else
+		{
+			args.push(value);
+		}
+
+		return args;
 	}
-	else
-	{
-		opts = undefined;
-	}
+	, []);
 
 	var str = args.join(' ');
 

@@ -13,9 +13,15 @@ Command(chunk)
 Command(chunk, options)
 Command(chunk, chunk, ...)
 Command(chunk, chunk, ..., options)
+Command(chunk, chunk, ..., options, options)
+Command(chunk, chunk, ..., options, chunk, options)
+Command(any sequence of chunks and options)
 ```
-Where chunk is a *string* or *array of strings* or *arguments*.
-Sequence of chunks may be followed by an options object, passed to `child_process.exec`.
+**options** is a object of options for `child_process.exec`.
+
+**chunk** is a *string* or *array of strings* or *arguments* or *array of strings and options*.
+
+All chunks are concatenated in one flat array, options objects are merged in one as well.
 
 ## examples
 ```javascript
@@ -44,6 +50,15 @@ Command('mkdir -p build')
 .then(Command.so('cp package.json build/'))
 .then(Command.so('cp -r src/'))
 .then(...);
+```
+
+## using in partials
+```javascript
+var gitLog = partial(Command, 'git', 'log', { cwd: '/opt/repo' });
+var gitLogOneline = partial(gitLog, '--oneline');
+
+gitLogOneline().then(console.log, console.error);
+gitLogOneline('-15').then(console.log, console.error);
 ```
 
 ## license

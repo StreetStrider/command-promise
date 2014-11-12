@@ -62,6 +62,57 @@ describe('Command', function ()
 		{
 			$test(done, Command('echo', [ '-n', '$(dirname $(pwd))', { cwd: '/tmp' } ]), '/');
 		});
+
+		it('(str, str, options, options)', function (done)
+		{
+			$test(done, Command(
+				'echo -n',
+				'$(pwd)',
+				{ cwd: '/abc' },
+				{ cwd: '/tmp' }
+			), '/tmp');
+		});
+
+		it('(str, str, options, [ options ])', function (done)
+		{
+			$test(done, Command(
+				'echo -n',
+				'$(pwd)',
+				{ cwd: '/abc' },
+				[ { cwd: '/tmp' } ]
+			), '/tmp');
+		});
+
+		it('(str, str, [ options, options ])', function (done)
+		{
+			$test(done, Command(
+				'echo -n',
+				'$(pwd)',
+				[ { cwd: '/abc' },
+				  { cwd: '/tmp' } ]
+			), '/tmp');
+		});
+
+		it('(str, str, [ options ], options )', function (done)
+		{
+			$test(done, Command(
+				'echo -n',
+				'$(pwd)',
+				[ { cwd: '/abc' },
+				  { cwd: '/tmp' } ]
+			), '/tmp');
+		});
+
+		it('(str, str, options, str, options )', function (done)
+		{
+			$test(done, Command(
+				'echo -n',
+				'$(pwd)',
+				{ cwd: '/abc' },
+				'1',
+				{ cwd: '/tmp' }
+			), '/tmp 1');
+		});
 	});
 
 	describe('with strings and arguments object', function ()
@@ -124,6 +175,50 @@ describe('Command', function ()
 		{
 			var args = Arguments('$(pwd)', { cwd: '/tmp' });
 			$test(done, Command('dirname', '-z', args), '/\0');
+		});
+
+		it('(str, [str], arguments with options, str, arguments with options)', function (done)
+		{
+			var
+				args1 = Arguments('$(pwd)', { cwd: '/abc' }),
+				args2 = Arguments('$(pwd)', { cwd: '/tmp' });
+
+			$test(done, Command('echo', [ '-n' ], args1, '1', args2 ), '/tmp 1 /tmp');
+		});
+	});
+
+	describe('in partial', function (done)
+	{
+		var partial = require('lodash').partial;
+
+		it('(str)(str)', function ()
+		{
+			var C = partial(Command, 'echo -n');
+
+			$test(done, C('1'), '1')
+		});
+
+		it('(str, str)(str)', function ()
+		{
+			var C = partial(Command, 'echo -n', '1');
+
+			$test(done, C('2'), '1 2');
+		});
+
+		it('(str, options)(str, options)', function ()
+		{
+			var C = partial(Command, 'echo -n', { cwd: '/abc' });
+
+			$test(done, C('$(pwd)', { cwd: '/tmp' }), '/tmp');
+		});
+
+		it('(str, options)(arguments with options)', function ()
+		{
+			var
+				C = partial(Command, 'echo -n', { cwd: '/abc' }),
+				args = Arguments('$(pwd)', { cwd: '/tmp' });
+
+			$test(done, C(args), '/tmp');
 		});
 	});
 
