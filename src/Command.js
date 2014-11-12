@@ -6,32 +6,40 @@ module.exports = Command;
 var
 	exec = require('child_process').exec,
 	Q    = require('bluebird'),
-	_    = require('lodash')
+
+	_    = require('lodash'),
+
+	last = _.last,
+	initial = _.initial,
+
+	flat = _.flatten,
+	isPlain = _.isPlainObject
 
 function Command (/* chunk, chunk, ..., options */)
 {
-	var args, options, str;
+	var
+		args = flat(arguments),
+		opts = last(args);
 
-	args = _.flatten(arguments);
-	options = _.last(args);
-	if (_.isPlainObject(options))
+	if (isPlain(opts))
 	{
-		args    = _.initial(args);
+		args = initial(args);
 	}
 	else
 	{
-		options = undefined;
+		opts = undefined;
 	}
-	str  = args.join(' ');
 
-	return Command.Simple(str, options);
+	var str = args.join(' ');
+
+	return Command.Simple(str, opts);
 }
 
 Command.Simple = Simple;
 
 function Simple (str, options)
 {
-	return new Q(function (r, rj)
+	return new Q(function (rs, rj)
 	{
 		exec(str, options, function (error, stdout, stderr)
 		{
@@ -41,7 +49,7 @@ function Simple (str, options)
 			}
 			else
 			{
-				r([stdout, stderr]);
+				rs([ stdout, stderr ]);
 			}
 		});
 	});
