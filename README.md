@@ -23,6 +23,10 @@ Command(any sequence of chunks and options)
 
 All chunks are concatenated in one flat array, options objects are merged in one as well.
 
+If you have hardcoded data just pass strings. If you have variative data
+then pass arrays, no need in joining elements or manipulating with `.apply`.
+If all of your data is hardcoded, look at [Command.Simple](#simple-command).
+
 ## examples
 ```javascript
 Command('ls', '-lA', { cwd: '/tmp' }).then(...);
