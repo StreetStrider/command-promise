@@ -1,6 +1,6 @@
 {
 	"name": "command-promise",
-	"version": "1.4.2",
+	"version": "1.4.3",
 	"description": "Promise wrapper for child_process.exec.",
 
 	"license": "MIT",
@@ -24,11 +24,15 @@
 
 	"dependencies":
 	{
-		"bluebird": "~2",
+		"promise": "~6",
 		"lodash-node": "~2.4"
 	},
 	"devDependencies":
 	{
 		"mocha": "~2"
+	},
+	"optionalDependencies":
+	{
+		"bluebird": "~2"
 	}
 }

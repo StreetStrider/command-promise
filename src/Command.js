@@ -4,14 +4,22 @@
 module.exports = Command;
 
 var
+	Q,
 	exec = require('child_process').exec,
-	Q    = require('bluebird'),
 
 	flat = require('lodash-node/modern/arrays/flatten');
-
 	reduce = require('lodash-node/modern/collections/reduce'),
 	isPlain = require('lodash-node/modern/objects/isPlainObject'),
 	extend = require('lodash-node/modern/objects/assign');
+
+try
+{
+	Q = require('bluebird');
+}
+catch (e)
+{
+	Q = require('promise');
+}
 
 
 function Command (/* chunk, chunk, ..., options, options, ... */)

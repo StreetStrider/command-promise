@@ -2,11 +2,10 @@
 
 var
 	Command = require('../src/Command'),
-	Q = require('bluebird'),
+	Q = require('promise'),
 
 	eq = require('assert').strictEqual;
 
-Q.onPossiblyUnhandledRejection(function () {});
 
 describe('Command', function ()
 {
