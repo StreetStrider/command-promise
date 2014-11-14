@@ -187,32 +187,32 @@ describe('Command', function ()
 		});
 	});
 
-	describe('in partial', function (done)
+	describe('in partial', function ()
 	{
 		var partial = require('lodash').partial;
 
-		it('(str)(str)', function ()
+		it('(str)(str)', function (done)
 		{
 			var C = partial(Command, 'echo -n');
 
 			$test(done, C('1'), '1')
 		});
 
-		it('(str, str)(str)', function ()
+		it('(str, str)(str)', function (done)
 		{
 			var C = partial(Command, 'echo -n', '1');
 
 			$test(done, C('2'), '1 2');
 		});
 
-		it('(str, options)(str, options)', function ()
+		it('(str, options)(str, options)', function (done)
 		{
 			var C = partial(Command, 'echo -n', { cwd: '/abc' });
 
 			$test(done, C('$(pwd)', { cwd: '/tmp' }), '/tmp');
 		});
 
-		it('(str, options)(arguments with options)', function ()
+		it('(str, options)(arguments with options)', function (done)
 		{
 			var
 				C = partial(Command, 'echo -n', { cwd: '/abc' }),
