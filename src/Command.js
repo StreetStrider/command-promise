@@ -7,13 +7,11 @@ var
 	exec = require('child_process').exec,
 	Q    = require('bluebird'),
 
-	_    = require('lodash'),
+	flat = require('lodash-node/modern/arrays/flatten');
 
-	flat = _.flatten;
-
-	reduce = _.reduce,
-	isPlain = _.isPlainObject,
-	extend = _.extend;
+	reduce = require('lodash-node/modern/collections/reduce'),
+	isPlain = require('lodash-node/modern/objects/isPlainObject'),
+	extend = require('lodash-node/modern/objects/assign');
 
 
 function Command (/* chunk, chunk, ..., options, options, ... */)
