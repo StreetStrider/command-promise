@@ -19,17 +19,20 @@
 	"main": "src/Command.js",
 	"scripts":
 	{
-		"test": "mocha --recursive test/"
+		"test": "mocha --recursive test/",
+		"browserify": "browserify src/lodash/index.js --outfile src/lodash.js --standalone lodash --bare"
 	},
 
 	"dependencies":
 	{
-		"promise": "~6",
-		"lodash-node": "~2.4"
+		"promise": "~6"
 	},
 	"devDependencies":
 	{
-		"mocha": "~2"
+		"mocha": "~2",
+
+		"browserify": "~6",
+		"lodash-node": "~2.4"
 	},
 	"optionalDependencies":
 	{
