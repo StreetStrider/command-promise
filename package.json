@@ -19,6 +19,7 @@
 	"main": "src/Command.js",
 	"scripts":
 	{
+		"prepublish": "npm run bundle",
 		"test": "mocha --recursive test/",
 
 		"bundle": "browserify src/deps/index.js --outfile src/deps.js --standalone deps --bare",
