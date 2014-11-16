@@ -20,7 +20,9 @@
 	"scripts":
 	{
 		"test": "mocha --recursive test/",
-		"browserify": "browserify src/lodash/index.js --outfile src/lodash.js --standalone lodash --bare"
+
+		"bundle": "browserify src/lodash/index.js --outfile src/lodash.js --standalone lodash --bare",
+		"clear": "rm src/lodash.js"
 	},
 
 	"dependencies":
