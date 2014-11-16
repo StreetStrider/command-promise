@@ -38,6 +38,7 @@
 	},
 	"optionalDependencies":
 	{
-		"bluebird": "~2"
+		"bluebird": "~2",
+		"q": "~1"
 	}
 }

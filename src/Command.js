@@ -17,10 +17,14 @@ try
 {
 	Q = require('bluebird');
 }
+catch (e) { try
+{
+	Q = require('q').Promise;
+}
 catch (e)
 {
 	Q = require('./deps').promise;
-}
+}}
 
 
 function Command (/* chunk, chunk, ..., options, options, ... */)
