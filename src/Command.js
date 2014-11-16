@@ -7,10 +7,10 @@ var
 	Q,
 	exec = require('child_process').exec,
 
-	flat = require('./lodash').flat,
-	reduce = require('./lodash').reduce,
-	isPlain = require('./lodash').isPlain,
-	extend = require('./lodash').extend;
+	flat = require('./deps').flat,
+	reduce = require('./deps').reduce,
+	isPlain = require('./deps').isPlain,
+	extend = require('./deps').extend;
 
 
 try
@@ -19,7 +19,7 @@ try
 }
 catch (e)
 {
-	Q = require('promise');
+	Q = require('./deps').promise;
 }
 
 

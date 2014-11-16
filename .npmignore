@@ -3,4 +3,4 @@
 .npmignore
 node_modules
 test
-src/lodash
+src/deps

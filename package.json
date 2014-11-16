@@ -21,20 +21,20 @@
 	{
 		"test": "mocha --recursive test/",
 
-		"bundle": "browserify src/lodash/index.js --outfile src/lodash.js --standalone lodash --bare",
-		"clear": "rm src/lodash.js"
+		"bundle": "browserify src/deps/index.js --outfile src/deps.js --standalone deps --bare",
+		"clear": "rm src/deps.js"
 	},
 
 	"dependencies":
 	{
-		"promise": "~6"
 	},
 	"devDependencies":
 	{
 		"mocha": "~2",
 
 		"browserify": "~6",
-		"lodash-node": "~2.4"
+		"lodash-node": "~2.4",
+		"promise": "~6"
 	},
 	"optionalDependencies":
 	{
