@@ -1,6 +1,6 @@
 {
 	"name": "command-promise",
-	"version": "1.5.1",
+	"version": "1.5.2",
 	"description": "Promise wrapper for child_process.exec.",
 
 	"license": "MIT",
@@ -20,7 +20,7 @@
 	"scripts":
 	{
 		"prepublish": "npm run bundle",
-		"test": "mocha --recursive test/",
+		"test": "mocha --check-leaks --recursive test/",
 
 		"bundle": "browserify src/deps/index.js --outfile src/deps.js --standalone deps --bare",
 		"clear": "rm src/deps.js"
