@@ -1,5 +1,8 @@
 # Command [![license|mit](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](README.md#license) [![npm|command-promise](http://img.shields.io/badge/npm-command--promise-CB3837.svg?style=flat-square)](https://www.npmjs.org/package/command-promise) [![npm test|with mocha](http://img.shields.io/badge/npm%20test-with%20mocha-9E785A.svg?style=flat-square)](http://mochajs.org/)
-Promise wrapper around `child_process.exec`.
+Promise wrapper around `child_process.exec`. Uses [promise](https://www.npmjs.org/package/promise)
+for result, but if there is a [Q](https://www.npmjs.org/package/q) or [Bluebird](https://www.npmjs.org/package/bluebird)
+will switch to it. This lib also handles arrays smartly, so not need in manual
+constructing any `apply`-ing them.
 
 **size**: ~90kB;
 **deps**: 0, all bundled in
