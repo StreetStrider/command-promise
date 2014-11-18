@@ -1,6 +1,9 @@
 # Command [![license|mit](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](README.md#license) [![npm|command-promise](http://img.shields.io/badge/npm-command--promise-CB3837.svg?style=flat-square)](https://www.npmjs.org/package/command-promise) [![npm test|with mocha](http://img.shields.io/badge/npm%20test-with%20mocha-9E785A.svg?style=flat-square)](http://mochajs.org/)
 Promise wrapper around `child_process.exec`.
 
+**size**: ~90kB;
+**deps**: 0, all bundled in
+
 ## usage
 ```javascript
 Command('ls -1').then(console.log, console.error);
