@@ -1,6 +1,6 @@
 {
 	"name": "command-promise",
-	"version": "1.5.3",
+	"version": "1.5.4",
 	"description": "Promise wrapper for child_process.exec.",
 
 	"license": "MIT",
