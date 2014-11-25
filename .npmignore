@@ -1,6 +1,8 @@
 
+.git
 .gitignore
 .npmignore
+npm-debug.log
 node_modules
 test
 src/deps
