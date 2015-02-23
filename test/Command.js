@@ -239,6 +239,28 @@ describe('Command', function ()
 		});
 	});
 
+	describe('util', function ()
+	{
+		var util = Command.util;
+
+		describe('.stderr', function ()
+		{
+			it('works well with no stderr', function (done)
+			{
+				$test(done, Command('echo -n'), '');
+			});
+
+			it('intercepts stderr', function (done)
+			{
+				var C = Command('>&2 echo -n error')
+				.then(util.stderr);
+
+				$testUtilError(done, C, 'error');
+			});
+		});
+
+	});
+
 });
 
 describe('Command.Simple', function ()
@@ -306,6 +328,13 @@ function $testError (done, command, code)
 	.then($done(done), done);
 }
 
+function $testUtilError (done, command, stderr)
+{
+	command
+	.then($fail, $eqErr(stderr))
+	.then($done(done), done);
+}
+
 function $done (done)
 {
 	return function ()
@@ -321,6 +350,14 @@ function $eq (stdout, stderr)
 	{
 		eq(stdout, pair[0]);
 		eq(stderr, pair[1]);
+	};
+}
+
+function $eqErr (expectedStderr)
+{
+	return function (stderr)
+	{
+		eq(stderr, expectedStderr);
 	};
 }
 

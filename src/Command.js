@@ -39,6 +39,7 @@ function Command (/* chunk, chunk, ..., options, options, ... */)
 }
 
 Command.Simple = Simple;
+Command.util = require('./util');
 
 function Simple (str, options)
 {
