@@ -33,6 +33,9 @@ If you have hardcoded data just pass strings. If you have variative data
 then pass arrays, no need in joining elements or manipulating with `.apply`.
 If all of your data is hardcoded, look at [Command.Simple](#simple-command).
 
+## return value
+The return value is a pair `[ stdout, stderr ]`.
+
 ## examples
 ```javascript
 Command('ls', '-lA', { cwd: '/tmp' }).then(...);
