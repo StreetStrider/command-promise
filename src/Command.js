@@ -4,28 +4,13 @@
 module.exports = Command;
 
 var
-	Q,
+	Q = require('./promise'),
 	exec = require('child_process').exec,
 
 	flat = require('./deps').flat,
 	reduce = require('./deps').reduce,
 	isPlain = require('./deps').isPlain,
 	extend = require('./deps').extend;
-
-
-try
-{
-	Q = require('bluebird');
-}
-catch (e) { try
-{
-	Q = require('q').Promise;
-}
-catch (e)
-{
-	Q = require('./deps').promise;
-}}
-
 
 function Command (/* chunk, chunk, ..., options, options, ... */)
 {
