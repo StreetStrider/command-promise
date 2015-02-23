@@ -259,6 +259,24 @@ describe('Command', function ()
 			});
 		});
 
+		describe('.trim', function ()
+		{
+			it('works with stdout', function (done)
+			{
+				var C = Command('echo ABC')
+				.then(util.trim);
+
+				$test(done, C, 'ABC');
+			});
+
+			it('works with stderr', function (done)
+			{
+				var C = Command('>&2 echo ABC')
+				.then(util.trim);
+
+				$test(done, C, '', 'ABC');
+			});
+		});
 	});
 
 });

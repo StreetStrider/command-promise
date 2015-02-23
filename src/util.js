@@ -14,3 +14,11 @@ util.stderr = function (pair)
 		return Q.reject(err);
 	}
 }
+
+util.trim = function (pair)
+{
+	return [
+		pair[0].trim(),
+		pair[1].trim()
+	];
+}
