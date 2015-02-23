@@ -19,11 +19,11 @@
 	"main": "src/Command.js",
 	"scripts":
 	{
-		"prepublish": "npm run bundle",
+		"prepublish": "npm run dist",
 		"test": "mocha --check-leaks --recursive test/",
 
-		"bundle": "browserify src/deps/index.js --outfile src/deps.js --standalone deps --bare",
-		"clear": "rm src/deps.js"
+		"dist":  "browserify src/deps/index.js --outfile src/deps.js --standalone deps --bare",
+		"clean": "rm src/deps.js"
 	},
 
 	"dependencies":
