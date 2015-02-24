@@ -1,6 +1,6 @@
 {
 	"name": "command-promise",
-	"version": "1.6.1",
+	"version": "1.6.2",
 	"description": "Promise wrapper for child_process.exec.",
 
 	"license": "MIT",
@@ -34,7 +34,7 @@
 		"mocha": "~2",
 
 		"browserify": "~6",
-		"lodash-node": "~2.4",
+		"lodash-node": "~3",
 		"promise": "~6",
 
 		"bluebird": "~2",

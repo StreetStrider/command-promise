@@ -7,10 +7,10 @@ var
 	Q = require('./promise'),
 	exec = require('child_process').exec,
 
-	flat = require('./deps').flat,
-	reduce = require('./deps').reduce,
+	flat    = require('./deps').flat,
+	reduce  = require('./deps').reduce,
 	isPlain = require('./deps').isPlain,
-	extend = require('./deps').extend;
+	extend  = require('./deps').extend;
 
 function Command (/* chunk, chunk, ..., options, options, ... */)
 {
