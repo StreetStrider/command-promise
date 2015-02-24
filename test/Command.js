@@ -276,6 +276,16 @@ describe('Command', function ()
 
 				$test(done, C, '', 'ABC');
 			});
+
+			it('works if single string', function (done)
+			{
+				var C = Command('echo ABC')
+				.then(function (pair) { return pair[0]; })
+				.then(util.trim)
+				.then(function (str) { console.log(str); return [ str, '' ]; }); /* to look like a pair */
+
+				$test(done, C, 'ABC', '');
+			});
 		});
 	});
 

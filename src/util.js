@@ -15,10 +15,18 @@ util.stderr = function (pair)
 	}
 }
 
-util.trim = function (pair)
+util.trim = function (pair_or_str)
 {
-	return [
-		pair[0].trim(),
-		pair[1].trim()
-	];
+	if (typeof pair_or_str === 'string')
+	{
+		return pair_or_str.trim();
+	}
+	else
+	{
+		var pair = pair_or_str;
+		return [
+			pair[0].trim(),
+			pair[1].trim()
+		];
+	}
 }
