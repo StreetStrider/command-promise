@@ -243,6 +243,17 @@ describe('Command', function ()
 	{
 		var util = Command.util;
 
+		describe('.stdout', function (done)
+		{
+			it('works', function (done)
+			{
+				var C = Command('echo -n ABC')
+				.then(util.stdout);
+
+				$testUtil(done, C, 'ABC');
+			});
+		});
+
 		describe('.stderr', function ()
 		{
 			it('works well with no stderr', function (done)
@@ -281,10 +292,9 @@ describe('Command', function ()
 			{
 				var C = Command('echo ABC')
 				.then(function (pair) { return pair[0]; })
-				.then(util.trim)
-				.then(function (str) { console.log(str); return [ str, '' ]; }); /* to look like a pair */
+				.then(util.trim);
 
-				$test(done, C, 'ABC', '');
+				$testUtil(done, C, 'ABC');
 			});
 		});
 	});
@@ -344,6 +354,13 @@ function $test (done, command, stdout, stderr)
 	.then($done(done), done);
 }
 
+function $testUtil (done, command, stdout)
+{
+	command
+	.then($eqStr(stdout), $fail)
+	.then($done(done), done);
+}
+
 function Arguments ()
 {
 	return arguments;
@@ -359,7 +376,7 @@ function $testError (done, command, code)
 function $testUtilError (done, command, stderr)
 {
 	command
-	.then($fail, $eqErr(stderr))
+	.then($fail, $eqStr(stderr))
 	.then($done(done), done);
 }
 
@@ -381,11 +398,11 @@ function $eq (stdout, stderr)
 	};
 }
 
-function $eqErr (expectedStderr)
+function $eqStr (expected)
 {
-	return function (stderr)
+	return function (str)
 	{
-		eq(stderr, expectedStderr);
+		eq(str, expected);
 	};
 }
 

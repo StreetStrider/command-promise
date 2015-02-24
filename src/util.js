@@ -5,6 +5,11 @@ var util = module.exports = {};
 
 var Q = require('./promise');
 
+util.stdout = function (pair)
+{
+	return pair[0];
+}
+
 util.stderr = function (pair)
 {
 	var err = pair[1];
