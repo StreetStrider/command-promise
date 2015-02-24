@@ -4,7 +4,7 @@ for result, but if there is a [Q](https://www.npmjs.org/package/q) or [Bluebird]
 will switch to it. This lib also handles arrays smartly, so not need in manual
 constructing any `apply`-ing them.
 
-**size**: ~90kB;
+**size**: ~64kB;
 **deps**: 0, all bundled in
 
 ## usage
