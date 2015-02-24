@@ -1,6 +1,6 @@
 {
 	"name": "command-promise",
-	"version": "1.6.2",
+	"version": "1.6.3",
 	"description": "Promise wrapper for child_process.exec.",
 
 	"license": "MIT",
@@ -19,11 +19,14 @@
 	"main": "src/Command.js",
 	"scripts":
 	{
-		"prepublish": "npm run dist",
+		"prepublish": "npm run deps",
 		"test": "mocha --check-leaks --recursive test/",
 
-		"dist":  "browserify src/deps/index.js --outfile src/deps.js --standalone deps --bare",
-		"clean": "rm src/deps.js"
+		"deps": "npm run brw; npm run min",
+		"brw": "browserify src/deps/index.js --outfile src/deps-bundle.js --standalone deps --bare",
+		"min": "uglifyjs --compress -- src/deps-bundle.js > src/deps.js; rm src/deps-bundle.js",
+
+		"clean": "rm -f src/deps-bundle.js src/deps.js"
 	},
 
 	"dependencies":
@@ -34,6 +37,8 @@
 		"mocha": "~2",
 
 		"browserify": "~6",
+		"uglify-js": "~2",
+
 		"lodash-node": "~3",
 		"promise": "~6",
 
