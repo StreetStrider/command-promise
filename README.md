@@ -36,6 +36,23 @@ If all of your data is hardcoded, look at [Command.Simple](#simple-command).
 ## return value
 The return value is a pair `[ stdout, stderr ]`.
 
+There're some utils to transform result.
+
+**only stdout**: If you want command to return only stdout, use `util.stdout`:
+```javascript
+Command('ls -l')
+.then(Command.util.stdout);
+```
+This will return not pair, but `stdout` string only.
+
+**stderr as error**: By default, result promise will be rejected only
+if `child_process.exec` returns error. It happens when return code is non-zero.
+If you want to reject also if there is something in `stderr`, use `util.stderr`.
+
+**trim content**: The majority of shell commands return streams with newline at
+the end. You can use `util.trim` to trim both `stdout` and `stderr`. It also works
+with string only, if promise was converted by `util.stdout` earlier.
+
 ## examples
 ```javascript
 Command('ls', '-lA', { cwd: '/tmp' }).then(...);
@@ -75,4 +92,4 @@ gitLogOneline('-15').then(console.log, console.error);
 ```
 
 ## license
-MIT. © StreetStrider, 2014.
+MIT. © StreetStrider, 2014 — 2015.
