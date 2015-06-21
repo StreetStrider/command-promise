@@ -4,7 +4,7 @@
 module.exports = Command;
 
 var
-	Q = require('./promise'),
+	Promise = require('./promise'),
 	exec = require('child_process').exec,
 
 	flat    = require('./deps').flat,
@@ -43,7 +43,7 @@ Command.util = require('./util');
 
 function Simple (str, options)
 {
-	return new Q(function (rs, rj)
+	return new Promise(function (rs, rj)
 	{
 		exec(str, options, function (error, stdout, stderr)
 		{

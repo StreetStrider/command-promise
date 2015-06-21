@@ -1,18 +1,18 @@
 
 
-var Q;
+var Promise;
 
 try
 {
-	Q = require('bluebird');
+	Promise = require('bluebird');
 }
 catch (e) { try
 {
-	Q = require('q').Promise;
+	Promise = require('q').Promise;
 }
 catch (e)
 {
-	Q = require('./deps').promise;
+	Promise = require('promise');
 }}
 
-module.exports = Q;
+module.exports = Promise;
