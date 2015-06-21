@@ -21,11 +21,13 @@
 	{
 		"test": "mocha --check-leaks --recursive test/",
 
-		"deps": "npm run brw; npm run min",
-		"brw": "browserify src/deps/index.js --outfile src/deps-bundle.js --standalone deps --bare",
-		"min": "uglifyjs --compress -- src/deps-bundle.js > src/deps.js; rm src/deps-bundle.js",
+		"postinstall": "npm run bundle-deps",
 
-		"clean": "rm -f src/deps-bundle.js src/deps.js"
+		"bundle-deps": "npm run brw; npm run min",
+		"brw": "browserify --node --standalone deps src/deps/index.js --outfile src/.bundle.js",
+		"min": "uglifyjs --compress -- src/.bundle.js > src/deps.js; rm src/.bundle.js",
+
+		"clean": "rm -f src/.bundle.js src/deps.js"
 	},
 
 	"dependencies":
