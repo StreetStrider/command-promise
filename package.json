@@ -19,7 +19,6 @@
 	"main": "src/Command.js",
 	"scripts":
 	{
-		"prepublish": "npm run deps",
 		"test": "mocha --check-leaks --recursive test/",
 
 		"deps": "npm run brw; npm run min",
