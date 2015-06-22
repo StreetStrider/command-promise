@@ -21,8 +21,6 @@
 	{
 		"test": "mocha --check-leaks --recursive test/",
 
-		"postinstall": "npm run bundle-deps",
-
 		"bundle-deps": "npm run brw; npm run min",
 		"brw": "browserify --node --standalone deps src/deps/index.js --outfile src/.bundle.js",
 		"min": "uglifyjs --compress -- src/.bundle.js > src/deps.js; rm src/.bundle.js",
