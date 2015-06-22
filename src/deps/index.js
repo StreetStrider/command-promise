@@ -3,10 +3,9 @@
 
 module.exports =
 {
-	flat:    require('lodash-node/modern/array/flattenDeep'),
-	reduce:  require('lodash-node/modern/collection/reduce'),
-	isPlain: require('lodash-node/modern/lang/isPlainObject'),
-	extend:  require('lodash-node/modern/object/assign'),
+	flat:    require('lodash.flattendeep'),
+	isPlain: require('lodash.isplainobject'),
+	extend:  require('lodash.assign'),
 
 	promise: require('promise')
 }

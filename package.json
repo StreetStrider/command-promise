@@ -34,7 +34,10 @@
 	{
 		"promise":  "~6",
 		"duplexer": "^0.1.1",
-		"lodash-node": "~3"
+
+		"lodash.flattendeep":   "^3.0.2",
+		"lodash.isplainobject": "^3.1.0",
+		"lodash.assign":        "^3.2.0"
 	},
 	"devDependencies":
 	{

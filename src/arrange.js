@@ -10,7 +10,7 @@ module.exports = function arrange (arguments)
 	var args = flat(arguments);
 	var opts = {};
 
-	args = reduce(args, function (args, value)
+	args = args.reduce(function (args, value)
 	{
 		if (isPlain(value))
 		{
