@@ -80,15 +80,46 @@ describe('Process', function ()
 		.then(Eq('data'))
 	})
 
+	it('can work with pipes in string (really?)', function ()
+	{
+		var pipe = Process('echo -n 1 2 3 | cat')
+		isDuplex(pipe)
+
+		return drain(pipe)
+		.then(Eq('1 2 3'))
+	})
+
+	it('can work with subshells (really?)', function ()
+	{
+		var pipe = Process('echo -n 1 2 $(pwd)', { cwd: '/tmp' })
+		isDuplex(pipe)
+
+		return drain(pipe)
+		.then(Eq('1 2 /tmp'))
+	})
+
 	it('works with all cases of arguments', function ()
 	{
 		var args1 = Arguments('$(pwd)', { cwd: '/abc' })
 		var args2 = Arguments('$(pwd)', { cwd: '/tmp' })
 
 		var pipe = Process('echo -n 1', '2', [[ '3' ], '4', { cwd: '/def' } ], args1, [ '5', args2 ])
+		isDuplex(pipe)
 
 		return drain(pipe)
 		.then(Eq('1 2 3 4 /tmp 5 /tmp'))
 	})
 
+})
+
+describe('Process.simple', function ()
+{
+	it('works', function ()
+	{
+		var pipe = Process.Simple('echo -n 1 2 $(pwd)', { cwd: '/tmp' })
+		isDuplex(pipe)
+
+		return drain(pipe)
+		.then(Eq('1 2 /tmp'))
+	})
 })
