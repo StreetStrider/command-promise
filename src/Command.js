@@ -1,31 +1,24 @@
 
 
 
-module.exports = Command;
+var Promise = require('./promise')
+var exec = require('child_process').exec
 
-var
-	Promise = require('./promise'),
-	exec = require('child_process').exec;
+var arrange = require('./arrange')
 
-var
-	arrange = require('./arrange');
-
-function Command (/* chunk, chunk, ..., options, options, ... */)
+var Command = module.exports = function Command (/* chunk, chunk, ..., options, options, ... */)
 {
-	var _ = arrange(arguments);
+	var A = arrange(arguments);
 
-	var args = _.args;
-	var opts = _.opts;
+	var str  = A.args.join(' ');
+	var opts = A.opts;
 
-	var str = args.join(' ');
-
-	return Command.Simple(str, opts);
+	return Simple(str, opts);
 }
 
-Command.Simple = Simple;
 Command.util = require('./util');
 
-function Simple (str, options)
+var Simple = Command.Simple = function Simple (str, options)
 {
 	return new Promise(function (rs, rj)
 	{

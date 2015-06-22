@@ -1,11 +1,10 @@
 
 
-var
-	Command = require('../src/Command'),
-	Q = require('promise'),
 
-	eq = require('assert').strictEqual;
+var Command = require('../src/Command')
+var Q = require('promise')
 
+var eq = require('assert').strictEqual
 
 describe('Command', function ()
 {
