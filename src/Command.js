@@ -5,33 +5,17 @@ module.exports = Command;
 
 var
 	Promise = require('./promise'),
-	exec = require('child_process').exec,
+	exec = require('child_process').exec;
 
-	flat    = require('./deps').flat,
-	reduce  = require('./deps').reduce,
-	isPlain = require('./deps').isPlain,
-	extend  = require('./deps').extend;
+var
+	arrange = require('./arrange');
 
 function Command (/* chunk, chunk, ..., options, options, ... */)
 {
-	var
-		args = flat(arguments),
-		opts = {};
+	var _ = arrange(arguments);
 
-	args = reduce(args, function (args, value)
-	{
-		if (isPlain(value))
-		{
-			extend(opts, value);
-		}
-		else
-		{
-			args.push(value);
-		}
-
-		return args;
-	}
-	, []);
+	var args = _.args;
+	var opts = _.opts;
 
 	var str = args.join(' ');
 

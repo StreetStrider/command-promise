@@ -32,7 +32,8 @@
 
 	"dependencies":
 	{
-		"promise": "~6",
+		"promise":  "~6",
+		"duplexer": "^0.1.1",
 		"lodash-node": "~3"
 	},
 	"devDependencies":
