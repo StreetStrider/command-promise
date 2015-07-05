@@ -1,6 +1,8 @@
 
 
 
+var slice = Array.prototype.slice;
+var Readable = require('stream').Readable;
 var exec = require('child_process').exec;
 var duplex = require('duplexer');
 var arrange = require('./arrange');
@@ -19,10 +21,74 @@ var Process = module.exports = function Process (/* chunk, chunk, ..., options, 
 
 var Simple = Process.Simple = function Simple (str, options)
 {
-	return piped(exec(str, options));
+	var proxyout = new Readable;
+	var end = { promise: false, stdout: false, full: false };
+
+	var child = exec(str, options, function (error, _, _)
+	{
+		if (error)
+		{
+			proxyout.emit('error', error);
+		}
+
+		end.promise = true;
+		ended();
+	});
+
+	var stdout = child.stdout.on('end', function ()
+	{
+		end.stdout = true;
+		ended();
+	});
+
+	function ended ()
+	{
+		if (end.full)
+		{
+			return;
+		}
+
+		if (end.stdout && end.promise)
+		{
+			end.full = true;
+			proxyout.emit('end');
+		}
+	}
+
+	[ 'data', 'close', 'error' ].forEach(readEventProxyTo(stdout, proxyout));
+	[ 'resume', 'pause' ].forEach(readMethodProxyTo(stdout, proxyout));
+
+	proxyout._read = new Function;
+
+	return duplex(child.stdin, proxyout);
 }
 
-function piped (child)
+function readEventProxyTo (from, to)
 {
-	return duplex(child.stdin, child.stdout);
+	return function (name)
+	{
+		from.on(name, function ()
+		{
+			var args = [ name ].concat(slice.call(arguments));
+			to.emit.apply(to, args);
+		});
+	}
+}
+
+function readMethodProxyTo (from, to)
+{
+	return function (name)
+	{
+		from[name] = function ()
+		{
+			to.emit(name);
+
+			var fn = to[name];
+			if (fn)
+			{
+				return fn.apply(to, arguments);
+			}
+			from.emit(name);
+		}
+	}
 }

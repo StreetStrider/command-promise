@@ -110,6 +110,24 @@ describe('Process', function ()
 		.then(Eq('1 2 3 4 /tmp 5 /tmp'))
 	})
 
+	it('throws proper errors', function ()
+	{
+		var pipe = Process('false')
+		var wasError = false
+
+		pipe.on('error', function ()
+		{
+			wasError = true
+		})
+
+		return drain(pipe)
+		.catch(function (error)
+		{
+			eq(1, error.code)
+			eq(true, wasError)
+		})
+	})
+
 })
 
 describe('Process.simple', function ()
