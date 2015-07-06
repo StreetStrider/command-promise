@@ -110,6 +110,20 @@ describe('Process', function ()
 		.then(Eq('1 2 3 4 /tmp 5 /tmp'))
 	})
 
+	it('works with Stream\'s .pipe()', function ()
+	{
+		var echo = Process('echo -n 1 2 3')
+		var cat  = Process('cat')
+
+		isDuplex(echo)
+		isDuplex(cat)
+
+		var pipe = echo.pipe(cat)
+
+		return drain(pipe)
+		.then(Eq('1 2 3'))
+	})
+
 	it('throws proper errors', function ()
 	{
 		var pipe = Process('false')
