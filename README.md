@@ -1,26 +1,43 @@
 # Command [![license|mit](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](README.md#license) [![npm|command-promise](http://img.shields.io/badge/npm-command--promise-CB3837.svg?style=flat-square)](https://www.npmjs.org/package/command-promise) [![npm test|with mocha](http://img.shields.io/badge/npm%20test-with%20mocha-9E785A.svg?style=flat-square)](http://mochajs.org/)
-Promise wrapper around `child_process.exec`. Uses [promise](https://www.npmjs.org/package/promise)
-for result, but if there is a [Q](https://www.npmjs.org/package/q) or [Bluebird](https://www.npmjs.org/package/bluebird)
-will switch to it. This lib also handles arrays smartly, so not need in manual
-constructing any `apply`-ing them.
+Promise & stream wrapper around `child_process.exec`. Uses [promise](https://www.npmjs.org/package/promise) for result, but if there is a [Q](https://www.npmjs.org/package/q) or [Bluebird](https://www.npmjs.org/package/bluebird) will switch to it. This lib also handles arrays smartly, so not need in manual constructing any `apply`-ing them.
 
-Module can be bundled: all deps melted into, without node_modules **size** is reduced to ~80kB.
+Module can be bundled: all deps melted into, without `node_modules/` **size** is reduced to ~80kB.
 
 ## usage
 ```javascript
-Command('ls -1').then(console.log, console.error);
+// Command return promise
+Command('ls -1').then(console.log, console.error)
+```
+
+```javascript
+// Process return duplex stream with writable as stdin,
+// and readable as stdout for spawned subprocess
+Process('ls -1').pipe(process.stdout)
+Process('ls -1').pipe(Process('xargs file -b')).pipe(process.stdout)
 ```
 
 ## signature
-Command is a multimethod:
 ```javascript
+// Command(…) → Promise
+// promise's value is `[ String(stdout), String(stderr) ]`
 Command(chunk)
 Command(chunk, options)
 Command(chunk, chunk, ...)
 Command(chunk, chunk, ..., options)
 Command(chunk, chunk, ..., options, options)
 Command(chunk, chunk, ..., options, chunk, options)
-Command(any sequence of chunks and options)
+Command(<any sequence of chunks and options>)
+
+// Process(…) → Stream (is duplex)
+// duplex input  is subprocess stdin
+// duplex output is subprocess stdout
+Process(chunk)
+Process(chunk, options)
+Process(chunk, chunk, ...)
+Process(chunk, chunk, ..., options)
+Process(chunk, chunk, ..., options, options)
+Process(chunk, chunk, ..., options, chunk, options)
+Process(<any sequence of chunks and options>)
 ```
 **options** is a object of options for `child_process.exec`.
 
@@ -28,47 +45,46 @@ Command(any sequence of chunks and options)
 
 All chunks are concatenated in one flat array, options objects are merged in one as well.
 
-If you have hardcoded data just pass strings. If you have variative data
-then pass arrays, no need in joining elements or manipulating with `.apply`.
-If all of your data is hardcoded, look at [Command.Simple](#simple-command).
+If you have hardcoded data just pass strings. If you have variative data then pass arrays, no need in joining elements or manipulating with `.apply`. If all of your data is hardcoded, look at [Command.Simple](#simple-command).
 
-## return value
-The return value is a pair `[ stdout, stderr ]`.
+The executed command can be complex, contain pipes and shell stream redirections.
 
-There're some utils to transform result.
+## Command utils
+There're some utils to transform Command's result:
 
 **only stdout**: If you want command to return only stdout, use `util.stdout`:
 ```javascript
-Command('ls -l')
-.then(Command.util.stdout);
+Command('ls -l').then(Command.util.stdout)
 ```
 This will return not pair, but `stdout` string only.
 
-**stderr as error**: By default, result promise will be rejected only
-if `child_process.exec` returns error. It happens when return code is non-zero.
-If you want to reject also if there is something in `stderr`, use `util.stderr`.
+**stderr as error**: By default, result promise will be rejected only if `child_process.exec` returns error. It happens when return code is non-zero. If you want to reject also if there is something in `stderr`, use `util.stderr`.
 
-**trim content**: The majority of shell commands return streams with newline at
-the end. You can use `util.trim` to trim both `stdout` and `stderr`. It also works
-with string only, if promise was converted by `util.stdout` earlier.
+**trim content**: The majority of shell commands return streams with newline at the end. You can use `util.trim` to trim both `stdout` and `stderr`. It also works with string only, if promise was converted by `util.stdout` earlier.
 
 ## examples
 ```javascript
-Command('ls', '-lA', { cwd: '/tmp' }).then(...);
-Command('ls', [ '-l', '-A' ], { cwd: '/tmp' }).then(...);
-Command('ls', [ '-l', '-A', { cwd: '/tmp' } ]).then(...);
-Command([ 'ls', '-1' ], { cwd: '/tmp' }).then(...);
+Command('ls', '-lA', { cwd: '/tmp' }).then(...)
+Command('ls', [ '-l', '-A' ], { cwd: '/tmp' }).then(...)
+Command('ls', [ '-l', '-A', { cwd: '/tmp' } ]).then(...)
+Command([ 'ls', '-1' ], { cwd: '/tmp' }).then(...)
 
 function Echo () { return Command('echo', '-', arguments); }
-Echo('-n', '-a', '-b', { encoding: 'ascii' }).then(...);
+Echo('-n', '-a', '-b', { encoding: 'ascii' }).then(...)
+
+Process('find src -name "*.js"').pipe(Process('xargs cat')).pipe(process.stdout)
+// or just
+Process('find src -name "*.js"', '|', 'xargs cat').pipe(process.stdout)
 ```
 
 ## simple command
-If you don't need any advanced arguments features, you can use `Command.Simple`.
-It is simpler and faster.
+If you don't need any advanced arguments features, you can use `Command.Simple` & `Process.Simple`.
 ```javascript
 Command.Simple(str)
 Command.Simple(str, options)
+
+Process.Simple(str)
+Process.Simple(str, options)
 ```
 
 ## using in the mid of the promise flow

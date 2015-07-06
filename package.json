@@ -1,11 +1,17 @@
 {
 	"name": "command-promise",
-	"version": "2.0.0-pre",
+	"version": "2.0.0",
 	"description": "Promise wrapper for child_process.exec.",
 
 	"license": "MIT",
 
-	"keywords": [ "child_process", "exec", "promise" ],
+	"keywords":
+	[
+		"promise", "stream",
+		"child_process", "exec", "spawn",
+		"pipe", "duplex",
+		"process", "shell"
+	],
 
 	"author":
 	{
