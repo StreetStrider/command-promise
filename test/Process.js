@@ -69,12 +69,14 @@ describe('Process', function ()
 	it('can take non-fd as stdin (really?)', function ()
 	{
 		var data = new stream.Readable
-		data.push('data')
-		data.push(null)
+		data._read = new Function
 
 		var cat = Process('cat')
 
 		var pipe = data.pipe(cat)
+
+		data.push('data')
+		data.push(null)
 
 		return drain(pipe)
 		.then(Eq('data'))

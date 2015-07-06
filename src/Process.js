@@ -55,7 +55,8 @@ var Simple = Process.Simple = function Simple (str, options)
 		}
 	}
 
-	[ 'data', 'close', 'error' ].forEach(readEventProxyTo(stdout, proxyout));
+	[ 'data', /*'close', */'error' ].forEach(readEventProxyTo(stdout, proxyout));
+	/* close lead to an error in stream-to-array finalization, onClose -> cleanup */
 	[ 'resume', 'pause' ].forEach(readMethodProxyTo(stdout, proxyout));
 
 	proxyout._read = new Function;

@@ -19,7 +19,7 @@
 	"main": "src/Command.js",
 	"scripts":
 	{
-		"test": "mocha --check-leaks --recursive test/",
+		"test": "mocha --check-leaks --full-trace --recursive test/",
 
 		"bundle-deps": "npm run brw; npm run min",
 		"brw": "browserify --node --standalone deps src/deps/index.js --outfile src/.bundle.js",
