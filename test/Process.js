@@ -66,7 +66,7 @@ describe('Process', function ()
 		.then(Eq('/tmp\n'))
 	})
 
-	it('can take non-fd as stdin (really?)', function ()
+	it('can take non-fd as stdin', function ()
 	{
 		var data = new stream.Readable
 		data._read = new Function
@@ -82,7 +82,7 @@ describe('Process', function ()
 		.then(Eq('data'))
 	})
 
-	it('can work with pipes in string (really?)', function ()
+	it('can work with pipes in string', function ()
 	{
 		var pipe = Process('echo -n 1 2 3 | cat')
 		isDuplex(pipe)
@@ -91,7 +91,7 @@ describe('Process', function ()
 		.then(Eq('1 2 3'))
 	})
 
-	it('can work with subshells (really?)', function ()
+	it('can work with subshells', function ()
 	{
 		var pipe = Process('echo -n 1 2 $(pwd)', { cwd: '/tmp' })
 		isDuplex(pipe)
