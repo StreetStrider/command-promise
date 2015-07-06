@@ -129,6 +129,8 @@ describe('Process', function ()
 		var pipe = Process('false')
 		var wasError = false
 
+		isDuplex(pipe)
+
 		pipe.on('error', function ()
 		{
 			wasError = true
