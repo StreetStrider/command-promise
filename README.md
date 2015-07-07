@@ -106,5 +106,20 @@ gitLogOneline().then(console.log, console.error);
 gitLogOneline('-15').then(console.log, console.error);
 ```
 
+## using in pipes
+Use `Process` in pipes, as a cheap and clear analogue of Gulp/Vinyl streams.
+```javascript
+var proc = require('command-promise/Process')
+var write = require('fs').createWriteStream
+
+gulp.task('less', function ()
+{
+	return proc('lessc', './web/css/index.less')
+	.pipe (proc('postcss --use autoprefixer'))
+	.pipe(write('index.css'))
+})
+```
+`Process` produces regular (not `vinyl-fs`) duplex streams. So you can use any commands in your pipes (even if they have no adapters for Gulp). Since Gulp can work with regular streams, you can use `Process` inside Gulp tasks.
+
 ## license
 MIT. © StreetStrider, 2014 — 2015.
