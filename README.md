@@ -58,7 +58,7 @@ Command('ls -l').then(Command.util.stdout)
 ```
 This will return not pair, but `stdout` string only.
 
-**stderr as error**: By default, result promise will be rejected only if `child_process.exec` returns error. It happens when return code is non-zero. If you want to reject also if there is something in `stderr`, use `util.stderr`.
+**stderr as error**: By default, result promise will be rejected only if `child_process.exec` returns error. It happens when return code is non-zero. If you want to reject also if there is something in `stderr`, use `util.stderr`. If no error, this will return `stdout` string only.
 
 **trim content**: The majority of shell commands return streams with newline at the end. You can use `util.trim` to trim both `stdout` and `stderr`. It also works with string only, if promise was converted by `util.stdout` earlier.
 
