@@ -255,9 +255,12 @@ describe('Command', function ()
 
 		describe('.stderr', function ()
 		{
-			it('works well with no stderr', function (done)
+			it('works well when no error', function (done)
 			{
-				$test(done, Command('echo -n'), '');
+				var C = Command('echo -n ABC')
+				.then(util.stderr);
+
+				$testUtil(done, C, 'ABC');
 			});
 
 			it('intercepts stderr', function (done)

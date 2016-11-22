@@ -18,6 +18,10 @@ util.stderr = function (pair)
 	{
 		return Q.reject(err);
 	}
+	else
+	{
+		return pair[0];
+	}
 }
 
 util.trim = function (pair_or_str)
